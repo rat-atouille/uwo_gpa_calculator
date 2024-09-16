@@ -3,7 +3,6 @@ import './Calculator.scss';
 
 const Calculator = () => {
   const [rows, setRows] = useState([{ grade: '', credit: '0.5' }]);
-  const [errorr, setError] = useState('');
   const [culm, setCulm] = useState(0);
 
   // change input values
@@ -29,13 +28,21 @@ const Calculator = () => {
     let sum = 0;    // sum of total calculated stuff
     let temp = 0;   // temp variable
     let weight = 0; // total credits
-
-    rows.forEach((item, index) => {
+    let hasError = false;
+    rows.forEach((item) => {
       // grade is negative or be larger than 100 
       if (item.grade < 0 || item.grade > 100 || !item.grade) {
-        setError('incorrect grade')
+        if (!hasError) {
+          alert("Enter a valid grade between 0 and 100 or in a 4.0 GPA scale");
+          hasError = true;
+        }
+        return;
       } if (item.credit != 0.5 && item.credit != 1) {
-        setError('incorrect credit')
+          if (!hasError) {
+            alert("Enter a valid credit (0.5 or 1)!");
+            hasError = true;
+          }
+        return;
       } else {
         if (item.grade < 50) {  // find culm
           if (item.grade > 4){  // not in 4.0 gpa scale -> Fail = 0
@@ -78,46 +85,65 @@ const Calculator = () => {
     return 0;
   }
 
+  const deleteRow = (tagetIndex) => {
+    if (rows.length > 1) {
+      const updatedRows = rows.filter((item,index) => index !== tagetIndex);
+      setRows(updatedRows);  
+    } else {
+      return;
+    }
+  }
+
+  const clearRow = () => {
+    setRows([{ grade: '', credit: '0.5' }]);
+  }
+
   return (
     <div className='calculator'>
-      <h1>University of Western Ontario GPA Calculator</h1>
-      <p>Enter your grade in GPA or percentage. I will automatically calculate it into GPA for you.</p>
-      <div className='inputs'>
-
-        <form onSubmit={calculate}>
-          <div className='labels'>
-            <label>Grade</label>
-            <label>Credit</label>
-          </div>
-          {rows.map((row, index) => (
-            <div key={index} className='input-row'>
-              <input
-                name="grade"
-                id={`grade-${index}`}
-                maxLength="3"
-                placeholder='70'
-                value={row.grade}
-                onChange={(e) => handleChange(index, e)}
-              />
-              <input
-                name="credit"
-                id={`credit-${index}`}
-                placeholder='0.5'
-                value={row.credit}
-                onChange={(e) => handleChange(index, e)}
-              />
+      <h1>Western GPA Calculator</h1>
+      <p>Enter your grade in <b>4.0 GPA scale</b> or <b>percentage</b>. I will automatically calculate it into GPA for you.</p>
+      <div className='container'>
+        <div className='inputs'>
+          <form onSubmit={calculate}>
+            <div className='labels'>
+              <label>Grade</label>
+              <label>Credit</label>
             </div>
-          ))}
+            {rows.map((row, index) => (
+              <div key={index} className={'input-row '}>
+                <input
+                  name="grade"
+                  id={`grade-${index}`}
+                  maxLength="3"
+                  placeholder='70'
+                  value={row.grade}
+                  className={(row.grade < 0 || row.grade > 100 || !row.grade) ? 'error' : ''}
+                  onChange={(e) => handleChange(index, e)}
+                />
+                <input
+                  name="credit"
+                  id={`credit-${index}`}
+                  placeholder='0.5'
+                  value={row.credit}
+                  className={(row.credit != 0.5 && row.credit != 1) ? 'error' : ''}
+                  onChange={(e) => handleChange(index, e)}
+                />
+                <span onClick={()=>deleteRow(index)}>✖</span>
+              </div>
+            ))}
 
-          <p>Press enter to add a row</p>
-          <div className='button-container'>
-            <button onClick={addRow} className='add'
-              >Add Row</button>
-            <button type='submit' className='submit'>Calculate</button>
-          </div>
-        </form>
+            <p>Press enter to add a row</p>
+            <div className='button-container'>
+              <button onClick={addRow} className='add'
+                >Add Row</button>
+              <button type='button' onClick={clearRow} className='clear'>Reset</button>
+              <button type='submit' className='submit'>Calculate</button>
+            </div>
+          </form>
+        </div>
+        <p className='cgpa'>cGPA: <span>{culm}</span></p>
       </div>
-      <p className='cgpa'>{culm}</p>
+
     </div>
   );
 }
