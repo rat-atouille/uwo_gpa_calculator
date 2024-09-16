@@ -1,0 +1,99 @@
+.calculator {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  padding: 5vh 5vw;
+  height: 100%;
+  flex-flow: column wrap;
+  h1 {
+    font-size: 1.8em;
+    margin-bottom: 0;
+    padding: 10px;
+  }
+  p {
+    margin:0;
+
+  }
+  .inputs {
+    background-color: rgb(251, 240, 210);
+    padding: 7vh 7vw 4vh 7vw;
+    margin:0;
+    border-radius: 10px;
+    form {
+      background-color: green;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: stretch;
+      gap: 10px;
+      .labels {
+        display: flex;
+        align-items: center;
+        padding: 5px;
+        font-weight: 700;
+        gap: 10px;
+      }
+      p {
+        margin:0;
+        color: grey;
+        font-size: 0.8rem;    
+        text-align: left; 
+        padding: 5px; 
+        margin-bottom: 10px;
+      }
+      .input-row{
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 5px;
+        gap: 35px;
+        input {
+          border-radius: 5px;
+          border:none;
+          width: 100px;
+          outline: 1px solid red;
+          &:active {
+            outline: 2px solid red;
+          }
+        }
+      }
+      .button-container {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        justify-content: space-around;
+        button {
+          background-color: rgb(255, 0, 0);
+          border:none;
+          border-radius: 5px;
+          padding: 3px 8px;
+          color: white;
+          font-weight: 600;
+          transition: ease 0.3s background-color;
+          &:hover {
+            background-color: rgb(190, 128, 193);
+          }
+        }
+      }
+    }
+  }
+  .cgpa {
+    padding: 7vh 7vw;
+    margin:0;
+    border-radius: 10px;
+    font-size: 1.2rem;
+    font-weight:600;
+    background-color: rgb(247, 182, 103);
+  }
+}
+
+.note {
+  user-select: none;
+  h1 {
+    text-align: center;
+  }
+  p {
+    text-align: center;
+    text-wrap: balance;
+  }
+}
