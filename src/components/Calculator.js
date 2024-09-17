@@ -38,7 +38,7 @@ const Calculator = () => {
           hasError = true;
         }
         return;
-      } if (item.credit != 0.5 && item.credit !=1) {
+      } if (item.credit != 0.5 && item.credit !== 1) {
           if (!hasError) {
             alert("Enter a valid credit (0.5 or 1)!");
             hasError = true;
@@ -130,7 +130,7 @@ const Calculator = () => {
                   id={`credit-${index}`}
                   placeholder='0.5'
                   value={row.credit}
-                  className={(row.credit != 0.5 && row.credit != 1) ? 'error' : ''}
+                  className={(row.credit != 0.5 && row.credit !== 1) ? 'error' : ''}
                   onChange={(e) => handleChange(index, e)}
                 />
                 <span className='delete' onClick={()=>deleteRow(index)}>✖</span>
@@ -152,7 +152,7 @@ const Calculator = () => {
         <div className='cal' onClick={()=> setDescript(!descript)}> <p>How is it calculated?</p>
         {descript && (
           <div className='description'>
-            Percentages are converted to GPA values based on the <a href='https://www.ouac.on.ca/guide/undergraduate-grade-conversion-table' target='_blank'>OUAC undergraduate grade conversion table</a>. Cumulative GPA is calculated after converting percentages to GPA.        
+            Percentages are converted to GPA values based on the <a href='https://www.ouac.on.ca/guide/undergraduate-grade-conversion-table' rel="noreferrer" target='_blank'>OUAC undergraduate grade conversion table</a>. Cumulative GPA is calculated after converting percentages to GPA.        
           </div>
         )}
       </div>
