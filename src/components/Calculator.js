@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import './Calculator.scss';
 
 const Calculator = () => {
-  const [rows, setRows] = useState([{ grade: '', credit: '0.5' }]);
+  const [rows, setRows] = useState([{ grade: '', credit: 0.5 }]);
   const [culm, setCulm] = useState(0);
   const [descript, setDescript] = useState(false);
 
@@ -17,7 +17,7 @@ const Calculator = () => {
   // addRow
   const addRow = (e) => {
     e.preventDefault();
-    setRows([...rows, { grade: '', credit: '0.5' }]);
+    setRows([...rows, { grade: '', credit: 0.5 }]);
   };
 
   const calculate = (e) => {
@@ -38,7 +38,7 @@ const Calculator = () => {
           hasError = true;
         }
         return;
-      } if (item.credit != 0.5 && item.credit != 1) {
+      } if (item.credit != 0.5 && item.credit !=1) {
           if (!hasError) {
             alert("Enter a valid credit (0.5 or 1)!");
             hasError = true;
