@@ -4,6 +4,7 @@ import './Calculator.scss';
 const Calculator = () => {
   const [rows, setRows] = useState([{ grade: '', credit: '0.5' }]);
   const [culm, setCulm] = useState(0);
+  const [descript, setDescript] = useState(false);
 
   // change input values
   const handleChange = (index, e) => {
@@ -31,7 +32,7 @@ const Calculator = () => {
     let hasError = false;
     rows.forEach((item) => {
       // grade is negative or be larger than 100 
-      if (item.grade < 0 || item.grade > 100 || !item.grade) {
+      if (item.grade < 0 || item.grade > 100 || !item.grade || isNaN(parseInt(item.grade))) {
         if (!hasError) {
           alert("Enter a valid grade between 0 and 100 or in a 4.0 GPA scale");
           hasError = true;
@@ -95,13 +96,17 @@ const Calculator = () => {
   }
 
   const clearRow = () => {
-    setRows([{ grade: '', credit: '0.5' }]);
+    setRows([{ grade: '', credit: '' }]);
   }
 
   return (
     <div className='calculator'>
-      <h1>Western GPA Calculator</h1>
-      <p>Enter your grade in <b>4.0 GPA scale</b> or <b>percentage</b>. I will automatically calculate it into GPA for you.</p>
+      <h1>Calculate your GPA.</h1>
+      <p>
+      Western doesn't calculate your GPA, but we've got you covered!
+      <br/>Simply enter your grades on the <b style={{ color: '#7b2cbf'}}>4.0 GPA scale</b> or as a <b style={{ color: '#7b2cbf'}}>percentage</b>, 
+      and we'll handle the GPA conversion for you automatically.
+      </p>
       <div className='container'>
         <div className='inputs'>
           <form onSubmit={calculate}>
@@ -117,7 +122,7 @@ const Calculator = () => {
                   maxLength="3"
                   placeholder='70'
                   value={row.grade}
-                  className={(row.grade < 0 || row.grade > 100 || !row.grade) ? 'error' : ''}
+                  className={(row.grade < 0 || row.grade > 100 || !row.grade || isNaN(parseInt(row.grade))) ? 'error' : ''}
                   onChange={(e) => handleChange(index, e)}
                 />
                 <input
@@ -128,20 +133,29 @@ const Calculator = () => {
                   className={(row.credit != 0.5 && row.credit != 1) ? 'error' : ''}
                   onChange={(e) => handleChange(index, e)}
                 />
-                <span onClick={()=>deleteRow(index)}>✖</span>
+                <span className='delete' onClick={()=>deleteRow(index)}>✖</span>
               </div>
             ))}
 
-            <p>Press enter to add a row</p>
+            <p className='help'>Press enter to add a row.
+              <br/>Mark below 50% or Fail is considered 0.
+            </p>
             <div className='button-container'>
+            <button type='button' onClick={clearRow} className='clear'>Reset</button>
               <button onClick={addRow} className='add'
                 >Add Row</button>
-              <button type='button' onClick={clearRow} className='clear'>Reset</button>
               <button type='submit' className='submit'>Calculate</button>
             </div>
           </form>
         </div>
         <p className='cgpa'>cGPA: <span>{culm}</span></p>
+        <div className='cal' onClick={()=> setDescript(!descript)}> <p>How is it calculated?</p>
+        {descript && (
+          <div className='description'>
+            Percentages are converted to GPA values based on the <a href='https://www.ouac.on.ca/guide/undergraduate-grade-conversion-table' target='_blank'>OUAC undergraduate grade conversion table</a>. Cumulative GPA is calculated after converting percentages to GPA.        
+          </div>
+        )}
+      </div>
       </div>
 
     </div>

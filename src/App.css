@@ -1,5 +1,5 @@
 .App {
-  text-align: center;
+  font-family: "Roboto", sans-serif;
   user-select: none;
   width: 100vw;
   height: 100vh;
@@ -9,17 +9,7 @@
   align-items: center;
   justify-content: center;
   display: flex;
-  font-family: "Inter", sans-serif; 
-  position: relative;
-  overflow-x: hidden;
   overflow-y: auto;
-  background: repeating-linear-gradient(
-      to bottom,
-      #ffffff,         
-      #ffffff 20px,    
-      #d7e8fe 20px,     
-      #d7e8fe 21px 
-    );
 }
 
 button {
