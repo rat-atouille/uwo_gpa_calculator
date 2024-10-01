@@ -6,8 +6,6 @@
   padding: 0;
   margin: 0;
   flex-direction: column;
-  align-items: center;
-  justify-content: center;
   display: flex;
   overflow-y: auto;
 }
